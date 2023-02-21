@@ -1,0 +1,33 @@
+{
+  "name": "youtube-music-api",
+  "version": "1.0.0",
+  "description": "API for @th-ch/youtube-music",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/th-ch/youtube-music.git"
+  },
+  "keywords": [
+    "youtube",
+    "music",
+    "th-ch",
+    "api",
+    "remote"
+  ],
+  "author": "Zohan Subhash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/th-ch/youtube-music/issues"
+  },
+  "homepage": "https://github.com/th-ch/youtube-music#readme",
+  "devDependencies": {
+    "express": "^4.18.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mongodb": "^5.0.1"
+  }
+}
