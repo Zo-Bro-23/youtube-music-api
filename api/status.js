@@ -15,7 +15,7 @@ export default async (req, res) => {
         const db = client.db(dbName)
 
         if (req.method == 'GET') {
-            const key = req.body.key
+            const key = req.query.key
 
             if (!key) {
                 throw new Error('No key provided')
