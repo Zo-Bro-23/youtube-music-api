@@ -35,7 +35,7 @@ export default async (req, res) => {
             const statusCollection = db.collection('status')
             const status = await statusCollection.find({ _id: key }).toArray()
 
-            if (status.expiry < Date.now()) {
+            if (status.expiry < Date.now() || status.length == 0) {
                 return res.send('No status!')
             }
 
