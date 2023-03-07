@@ -1,0 +1,6 @@
+<svg width="180" height="300">
+  <rect width="180" height="300" rx="10" style="fill: #bd78bb;"/>
+  <image href="https://lh3.googleusercontent.com/tDTFvR93Gvtk8sUS9lJqZ0EdfwjE9oFNNWFWsx6gGQjK-K5sZ97ff6Q8K0hXykegMsKWDvRfX3YthTadig=w544-h544-l90-rj" width="155" x="12.5" y="12.5" style="clip-path: inset(0px round 30px);"/>
+  <text x="90" y="210" fill="#fed1ff" font-size="16pt" font-weight="bold" style="text-anchor: middle;">Ближе</text>
+  <text x="90" y="235" style="text-anchor: middle;" fill="#cca5c6">ХАБИБ</text>
+</svg>
