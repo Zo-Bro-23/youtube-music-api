@@ -118,7 +118,7 @@ export default async (req, res) => {
                 elapsedSeconds,
                 url,
                 album,
-                expiry
+                // expiry
             }, { upsert: true })
 
             res.send({
