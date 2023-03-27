@@ -32,26 +32,14 @@ export default async (req, res) => {
                 throw new Error('Invalid key')
             }
 
-            const statusCollection = db.collection('status')
-            const status = await statusCollection.find({ _id: key }).toArray()
+            const controlsCollection = db.collection('controls')
+            const controls = await controlsCollection.find({ _id: key }).toArray()
 
-            // if (status.length == 0 || status[0].expiry < Date.now()) {
-            if (status.length == 0) {
+            if (controls.length == 0 || controls[0].expiry < Date.now()) {
                 return res.send('No status!')
             }
 
-            if (req.query.type == 'svg') {
-                if (req.query.format == 'minimal') {
-                    return res.send(`<svg width="180" height="300">
-  <rect width="180" height="300" rx="10" style="fill: #bd78bb;"/>
-  <image href="${status[0].imageSrc}" width="155" x="12.5" y="12.5" style="clip-path: inset(0px round 30px);"/>
-  <text x="90" y="210" fill="#fed1ff" font-size="16pt" font-weight="bold" style="text-anchor: middle;">${status[0].title}</text>
-  <text x="90" y="235" style="text-anchor: middle;" fill="#cca5c6">${status[0].artist}</text>
-</svg>`)
-                }
-            } else {
-                return res.send(status[0])
-            }
+            return res.send(controls[0])
         }
 
         if (req.method == 'POST') {
@@ -133,7 +121,7 @@ export default async (req, res) => {
                 elapsedSeconds,
                 url,
                 album,
-                // expiry
+                expiry
             })
         }
     } catch (err) {
