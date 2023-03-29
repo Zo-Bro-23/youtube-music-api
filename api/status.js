@@ -136,6 +136,8 @@ export default async (req, res) => {
                 // expiry
             })
         }
+
+        client.close()
     } catch (err) {
         console.log('Error!', err)
         res.status(400).send({ error: err.message })

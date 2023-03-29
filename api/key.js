@@ -58,6 +58,8 @@ export default async (req, res) => {
 
             res.send({ key: req.body.newKey })
         }
+
+        client.close()
     } catch (err) {
         console.log('Error!', err)
         res.status(400).send({ error: err.message })
