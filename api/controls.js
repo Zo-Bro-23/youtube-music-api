@@ -41,7 +41,10 @@ export default async (req, res) => {
                 return res.send('No pending controls!')
             }
 
-            return res.send({ controls: pendingControls[key] })
+            const tempControls = pendingControls[key]
+            pendingControls[key] = undefined
+
+            return res.send({ controls: tempControls })
         }
 
         if (req.method == 'POST') {
