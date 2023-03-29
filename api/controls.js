@@ -41,7 +41,7 @@ export default async (req, res) => {
                 return res.send('No pending controls!')
             }
 
-            return res.send(controls[key])
+            return res.send({ controls: controls[key] })
         }
 
         if (req.method == 'POST') {
