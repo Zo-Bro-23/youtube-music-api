@@ -65,14 +65,14 @@ export default async (req, res) => {
                 key,
                 title,
                 artist,
-                views,
-                uploadDate,
-                imageSrc,
-                isPaused,
-                songDuration,
-                elapsedSeconds,
-                url,
-                album
+                views = 0,
+                uploadDate = '1970-01-01',
+                imageSrc = 'https://seeklogo.com/images/Y/youtube-music-logo-50422973B2-seeklogo.com.png',
+                isPaused = false,
+                songDuration = 0,
+                elapsedSeconds = 0,
+                url = 'https://music.youtube.com',
+                album = 'Unknown Album'
             } = req.body
 
             if (!key) {
