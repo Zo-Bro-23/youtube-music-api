@@ -3,15 +3,19 @@ import * as dotenv from 'dotenv'
 import * as randomstring from 'randomstring'
 import { assert } from '@sindresorhus/is'
 
+let client
+
 export default async (req, res) => {
     dotenv.config()
 
     try {
         const url = process.env.MONGO_URL
-        const client = new MongoClient(url)
         const dbName = 'youtube-music'
 
-        await client.connect()
+        if (!client) {
+            client = await (new MongoClient(url)).connect()
+        }
+
         const db = client.db(dbName)
 
         if (req.method == 'GET') {
@@ -58,8 +62,6 @@ export default async (req, res) => {
 
             res.send({ key: req.body.newKey })
         }
-
-        client.close()
     } catch (err) {
         console.log('Error!', err)
         res.status(400).send({ error: err.message })
