@@ -51,10 +51,8 @@ export default async (req, res) => {
             console.log(req.body)
             const keysCollection = db.collection('keys')
 
-            const {
-                key,
-                controls
-            } = req.body
+            const key = req.body.key
+            let controls = req.body.controls
 
             if (!key) {
                 throw new Error('No key provided')
@@ -62,6 +60,10 @@ export default async (req, res) => {
 
             if (!controls) {
                 throw new Error('No controls provided')
+            }
+
+            if (typeof controls == 'string') {
+                controls = [controls]
             }
 
             assert.string(key)
