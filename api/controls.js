@@ -38,7 +38,7 @@ export default async (req, res) => {
             }
 
             if (!pendingControls[key]) {
-                return res.send('No pending controls!')
+                return res.send({ controls: [] })
             }
 
             const tempControls = pendingControls[key]

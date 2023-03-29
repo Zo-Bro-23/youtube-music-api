@@ -41,7 +41,7 @@ export default async (req, res) => {
 
             // if (status.length == 0 || status[0].expiry < Date.now()) {
             if (status.length == 0) {
-                return res.send('No status!')
+                return res.send({})
             }
 
             if (req.query.type == 'svg') {
