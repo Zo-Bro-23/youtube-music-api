@@ -84,7 +84,7 @@ export default async (req, res) => {
                 throw new Error('Invalid key')
             }
 
-            pendingControls[key] = controls
+            pendingControls[key] = pendingControls[key].concat(controls)
 
             res.send({
                 key,
