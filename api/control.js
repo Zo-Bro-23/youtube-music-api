@@ -3,15 +3,20 @@ import * as dotenv from 'dotenv'
 import * as randomstring from 'randomstring'
 import { assert } from '@sindresorhus/is'
 
+let client
+let pendingControls = {}
+
 export default async (req, res) => {
     dotenv.config()
 
     try {
         const url = process.env.MONGO_URL
-        const client = new MongoClient(url)
         const dbName = 'youtube-music'
 
-        await client.connect()
+        if (!client) {
+            client = await (new MongoClient(url)).connect()
+        }
+
         const db = client.db(dbName)
 
         if (req.method == 'GET') {
@@ -32,14 +37,11 @@ export default async (req, res) => {
                 throw new Error('Invalid key')
             }
 
-            const controlsCollection = db.collection('controls')
-            const controls = await controlsCollection.find({ _id: key }).toArray()
-
-            if (controls.length == 0 || controls[0].expiry < Date.now()) {
-                return res.send('No status!')
+            if (!controls[key]) {
+                return res.send('No pending controls!')
             }
 
-            return res.send(controls[0])
+            return res.send(controls[key])
         }
 
         if (req.method == 'POST') {
@@ -47,41 +49,27 @@ export default async (req, res) => {
 
             const {
                 key,
-                title,
-                artist,
-                views,
-                uploadDate,
-                imageSrc,
-                isPaused,
-                songDuration,
-                elapsedSeconds,
-                url,
-                album
+                controls
             } = req.body
 
             if (!key) {
                 throw new Error('No key provided')
             }
 
-            if (!title) {
-                throw new Error('No title provided')
-            }
-
-            if (!artist) {
-                throw new Error('No artist provided')
+            if (!controls) {
+                throw new Error('No controls provided')
             }
 
             assert.string(key)
-            assert.string(title)
-            assert.string(artist)
-            views ? assert.string(views) : false
-            uploadDate ? assert.string(uploadDate) : false
-            imageSrc ? assert.string(imageSrc) : false
-            isPaused ? assert.boolean(isPaused) : false
-            songDuration ? assert.string(songDuration) : false
-            elapsedSeconds ? assert.number(elapsedSeconds) : false
-            url ? assert.string(url) : false
-            album ? assert.string(album) : false
+            assert.array(controls, assert.string)
+
+            const allowedControls = ['previous', 'next', 'playPause', 'play', 'pause', 'like', 'dislike', 'go10sBack', 'go10sForward', 'go1sBack', 'go1sForward', 'shuffle', 'switchRepeat', 'volumeMinus10', 'volumePlus10', 'fullscreen', 'muteUnmute', 'maximizeMinimisePlayer', 'goToHome', 'goToLibrary', 'goToSettings', 'goToExplore', 'search', 'showShortcuts']
+
+            controls.forEach(control => {
+                if (!allowedControls.includes(control)) {
+                    throw new Error(`Control ${control} is not permitted`)
+                }
+            })
 
             let keys = await keysCollection.find({ _id: key }).toArray()
             keys = keys.map(key => key._id)
@@ -90,38 +78,11 @@ export default async (req, res) => {
                 throw new Error('Invalid key')
             }
 
-            const statusCollection = db.collection('status')
-
-            const expiry = Date.now() + 600000
-
-            await statusCollection.replaceOne({ _id: key }, {
-                _id: key,
-                title,
-                artist,
-                views,
-                uploadDate,
-                imageSrc,
-                isPaused,
-                songDuration,
-                elapsedSeconds,
-                url,
-                album,
-                expiry
-            }, { upsert: true })
+            pendingControls[key] = controls
 
             res.send({
                 key,
-                title,
-                artist,
-                views,
-                uploadDate,
-                imageSrc,
-                isPaused,
-                songDuration,
-                elapsedSeconds,
-                url,
-                album,
-                expiry
+                controls
             })
         }
     } catch (err) {
