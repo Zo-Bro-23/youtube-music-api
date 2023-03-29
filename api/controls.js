@@ -37,11 +37,11 @@ export default async (req, res) => {
                 throw new Error('Invalid key')
             }
 
-            if (!controls[key]) {
+            if (!pendingControls[key]) {
                 return res.send('No pending controls!')
             }
 
-            return res.send({ controls: controls[key] })
+            return res.send({ controls: pendingControls[key] })
         }
 
         if (req.method == 'POST') {
