@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 import * as randomstring from 'randomstring'
 import { assert } from '@sindresorhus/is'
 
+import { sendResponse } from '../lib/utils.js'
+
 let client
 
 export default async (req, res) => {
@@ -27,7 +29,7 @@ export default async (req, res) => {
                 key = randomstring.generate({ charset: 'alphabetic', length: 25, readable: true })
             }
             await keysCollection.insertOne({ _id: key })
-            return res.send({ key })
+            return sendResponse(res, { key }, 200)
         }
 
         if (req.method == 'PUT') {
@@ -60,10 +62,10 @@ export default async (req, res) => {
             await keysCollection.deleteOne({ _id: req.body.key })
             await keysCollection.insertOne({ _id: req.body.newKey })
 
-            res.send({ key: req.body.newKey })
+            return sendResponse(res, { key: req.body.newKey }, 200)
         }
     } catch (err) {
         console.log('Error!', err)
-        res.status(400).send({ error: err.message })
+        return sendResponse(res, { error: err.message }, 400)
     }
 }

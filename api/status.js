@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 import * as randomstring from 'randomstring'
 import { assert } from '@sindresorhus/is'
 
+import { sendResponse } from '../lib/utils.js'
+
 let client
 
 export default async (req, res) => {
@@ -41,20 +43,20 @@ export default async (req, res) => {
 
             // if (status.length == 0 || status[0].expiry < Date.now()) {
             if (status.length == 0) {
-                return res.send({})
+                return sendResponse(res, {}, 200)
             }
 
             if (req.query.type == 'svg') {
                 if (req.query.format == 'minimal') {
-                    return res.send(`<svg width="180" height="300">
+                    return sendResponse(res, `<svg width="180" height="300">
   <rect width="180" height="300" rx="10" style="fill: #bd78bb;"/>
   <image href="${status[0].imageSrc}" width="155" x="12.5" y="12.5" style="clip-path: inset(0px round 30px);"/>
   <text x="90" y="210" fill="#fed1ff" font-size="16pt" font-weight="bold" style="text-anchor: middle;">${status[0].title}</text>
   <text x="90" y="235" style="text-anchor: middle;" fill="#cca5c6">${status[0].artist}</text>
-</svg>`)
+</svg>`, 200)
                 }
             } else {
-                return res.send(status[0])
+                return sendResponse(res, status[0], 200)
             }
         }
 
@@ -125,7 +127,7 @@ export default async (req, res) => {
                 // expiry
             }, { upsert: true })
 
-            res.send({
+            return sendResponse(res, {
                 key,
                 title,
                 artist,
@@ -138,10 +140,10 @@ export default async (req, res) => {
                 url,
                 album,
                 // expiry
-            })
+            }, 200)
         }
     } catch (err) {
         console.log('Error!', err)
-        res.status(400).send({ error: err.message })
+        return sendResponse(res, { error: err.message }, 400)
     }
 }

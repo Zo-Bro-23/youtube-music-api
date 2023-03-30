@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv'
 import * as randomstring from 'randomstring'
 import { assert } from '@sindresorhus/is'
 
+import { sendResponse } from '../lib/utils.js'
+
 let client
 let pendingControls = {}
 
@@ -38,13 +40,13 @@ export default async (req, res) => {
             }
 
             if (!pendingControls[key]) {
-                return res.send({ controls: [] })
+                return sendResponse(res, { controls: [] }, 200)
             }
 
             const tempControls = pendingControls[key]
             pendingControls[key] = undefined
 
-            return res.send({ controls: tempControls })
+            return sendResponse(res, { controls: tempControls }, 200)
         }
 
         if (req.method == 'POST') {
@@ -90,13 +92,13 @@ export default async (req, res) => {
                 pendingControls[key] = controls
             }
 
-            res.send({
+            return sendResponse(res, {
                 key,
                 controls
-            })
+            }, 200)
         }
     } catch (err) {
         console.log('Error!', err)
-        res.status(400).send({ error: err.message })
+        return sendResponse(res, { error: err.message }, 400)
     }
 }
