@@ -74,7 +74,8 @@ export default async (req, res) => {
                 songDuration = 0,
                 elapsedSeconds = 0,
                 url = 'https://music.youtube.com',
-                album = 'Unknown Album'
+                album = 'Unknown Album',
+                likeStatus = 'UNKNOWN'
             } = req.body
 
             if (!key) {
@@ -100,6 +101,7 @@ export default async (req, res) => {
             elapsedSeconds ? assert.number(elapsedSeconds) : false
             url ? assert.string(url) : false
             album ? assert.string(album) : false
+            likeStatus ? assert.string(likeStatus) : false
 
             let keys = await keysCollection.find({ _id: key }).toArray()
             keys = keys.map(key => key._id)
@@ -124,6 +126,7 @@ export default async (req, res) => {
                 elapsedSeconds,
                 url,
                 album,
+                likeStatus,
                 // expiry
             }, { upsert: true })
 
@@ -139,6 +142,7 @@ export default async (req, res) => {
                 elapsedSeconds,
                 url,
                 album,
+                likeStatus,
                 // expiry
             }, 200)
         }
