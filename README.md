@@ -52,4 +52,7 @@
 ## Android App
 Download from [Google Play]() or use the latest APK from the `./android/` folder.
 
+> **Warning**
+> The API key set using the Android App is semi-permenant. To change the key go to Settings > Apps > Remote > Clear Data > Clear All Data.
+
 ### Screenshots
