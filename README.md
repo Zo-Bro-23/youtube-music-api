@@ -56,14 +56,9 @@ Download from [Google Play]() or use the latest APK from the `./android/` folder
 > The API key set using the Android App is semi-permenant. To change the key go to Settings > Apps > Remote > Clear Data > Clear All Data.
 
 ### Screenshots
-![image](https://user-images.githubusercontent.com/62234360/229007209-165dbce0-d133-499c-9f82-c17efd3531b2.png)
-![image](https://user-images.githubusercontent.com/62234360/229007231-64b8781e-f3b2-45cc-8c88-ff45d7c2f2bc.png)
-![image](https://user-images.githubusercontent.com/62234360/229007272-d3bb0595-6e33-40c5-9f75-6b4dbb06e18c.png)
-![image](https://user-images.githubusercontent.com/62234360/229007243-2aea529f-9de3-421e-9797-90b1c5edd159.png)
-
 <p align="left">
 <img src="https://user-images.githubusercontent.com/62234360/229007209-165dbce0-d133-499c-9f82-c17efd3531b2.png" width="20%">
 <img src="https://user-images.githubusercontent.com/62234360/229007231-64b8781e-f3b2-45cc-8c88-ff45d7c2f2bc.png" width="20%">
 <img src="https://user-images.githubusercontent.com/62234360/229007272-d3bb0595-6e33-40c5-9f75-6b4dbb06e18c.png" width="20%">
-<img src="https://user-images.githubusercontent.com/62234360/229007243-2aea529f-9de3-421e-9797-90b1c5edd159.png" width="20%">
+<img src="https://user-images.githubusercontent.com/62234360/229007948-29806e26-4e01-4844-8d51-bd70e40876d3.png" width="20%">
 </p>
